@@ -1,4 +1,4 @@
-# Project Introduction: Basic Game of Life Web Application
+# Basic Game of Life Web Application
 
 Welcome to the Basic Game of Life Web Application! This project is a simple implementation of John Horton Conway's "Game of Life" using basic HTML, CSS, and JavaScript. The Game of Life is a cellular automaton that follows a set of simple rules to simulate the evolution of cells on a grid.
 
