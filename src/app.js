@@ -7,6 +7,7 @@ let cur_gen = initialzing(num, playground);
 
 document.getElementById("start").addEventListener("click", () => {
   console.log("game started");
+  clearInterval(timerId);
   timerId = setInterval(gameOfLife, 250);
 });
 
@@ -42,8 +43,10 @@ function initialzing(num, playground) {
   return arr;
 }
 
+
+// selecting a cell to live 
 playground.addEventListener("click", (e) => {
-  //console.log(e.target.id);
+  console.log(e.target.classList);
   if (e.target.hasChildNodes()) return;
 
   let index = e.target.id.split(",");
@@ -74,26 +77,40 @@ const gameOfLife = () => {
       //upp
       if (i > 0 && cur_gen[i - 1][j] === true) neighbour++;
 
+      //upper left 
+      if(i>0 && j>0 && cur_gen[i-1][j-1]===true) neighbour++;
+
+      // upper right 
+      if(i>0 && j<num-1 && cur_gen[i-1][j+1]===true) neighbour++;
+
       // left
       if (j > 0 && cur_gen[i][j - 1] === true) neighbour++;
 
       // down
       if (i < num - 1 && cur_gen[i + 1][j] === true) neighbour++;
 
+      //down right 
+      if(i<num-1 && j<num-1 && cur_gen[i+1][j+1]===true) neighbour++;
+
+      //down left 
+      if(i<num-1 && j>0 && cur_gen[i+1][j-1]===true) neighbour++;
+
       //right
       if (j < num - 1 && cur_gen[i][j + 1] === true) neighbour++;
 
       //check for the current life or death of a cell
-      if (neighbour < 2 || neighbour > 3) {
+      if ((neighbour < 2 || neighbour > 3) && cur_gen[i][j] ) {
         next_gen[i][j] = false;
         document
           .getElementById(String(i) + "," + String(j))
           .setAttribute("class", "cell");
-      } else if (neighbour <= 3) {
+      } else if (neighbour === 3 && !cur_gen[i][j]) {
         next_gen[i][j] = true;
         document
           .getElementById(String(i) + "," + String(j))
           .setAttribute("class", "cellLive");
+      }else{
+        next_gen[i][j]=cur_gen[i][j];
       }
     }
   }
